@@ -13,7 +13,7 @@ import {storage} from '../firebase/firebase';
 
 
 
-const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+
     const validationSchema=Yup.object().shape({
     pname: Yup.string()
     .min(3, "Your First Name is too short")
@@ -22,7 +22,6 @@ const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2
     price: Yup.string()
     .min(1, 'Minimal value 1')
     .max(15, 'Maximum value 15')
-    .matches(phoneRegExp, 'Minimum one value Enter')
     .required('Price is required.'),
 })
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, 
   Switch,
-  BrowserRouter as Router,
+  BrowserRouter,
   Link,
   Redirect
 } from "react-router-dom";
@@ -17,7 +17,8 @@ import userManage from "./components/userManage"
 import Delivery from "./components/Sidebar/Menu"
 import addProduct from "./components/addProduct"
 import Products from "./components/products"
-import Cart from "./components/cart"
+import Cart from "./components/Cart"
+import Navbar from './components/Navbar'
 
 
 
@@ -28,25 +29,28 @@ import Cart from "./components/cart"
 function App(props) {
   const { isAuthenticated, isVerifying } = props;
   return (
-    <Switch>
-      <ProtectedRoute
-        exact
-        path="/"
-        component={Home}
-        isAuthenticated={isAuthenticated}
-        isVerifying={isVerifying}
-      />
-      <Route path="/login" component={Login} />
-      <Route path="/signUp" component={signUp} />
-      <Route path="/ForgotPassword" component={ForgotPassword} />
-      <Route path="/userManage" component={userManage} />
-      {/* <Route path="/table" component={MaterialTableDemo} /> */}
-      <Route path="/Delivery" component={Delivery} />
-      <Route path="/addProduct" component={addProduct} />
-      <Route path="/Products" component={Products} />
-      <Route path="/Cart" component={Cart} />
+    <BrowserRouter>
+      <Navbar/>
+      <Switch>
+        <ProtectedRoute
+          exact
+          path="/"
+          component={Home}
+          isAuthenticated={isAuthenticated}
+          isVerifying={isVerifying}
+        />
+        <Route path="/login" component={Login} />
+        <Route path="/signUp" component={signUp} />
+        <Route path="/ForgotPassword" component={ForgotPassword} />
+        <Route path="/userManage" component={userManage} />
+        {/* <Route path="/table" component={MaterialTableDemo} /> */}
+        <Route path="/Delivery" component={Delivery} />
+        <Route path="/addProduct" component={addProduct} />
+        <Route path="/Products" component={Products} />
+        <Route path="/Cart" component={Cart} />
 
-    </Switch>
+      </Switch>
+    </BrowserRouter>
   );
 }
 

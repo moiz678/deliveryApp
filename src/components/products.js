@@ -12,6 +12,9 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { useState, useEffect } from 'react'  
 import {myFirebase} from "../firebase/firebase";
+import {addToCart} from "../actions/cartActions";
+import {connect } from "react-redux"
+
 
 
 
@@ -30,6 +33,7 @@ const useItems = () => {
             ...doc.data() //spread operator merges data to id.
           }));
           setItems(listItems); //items is equal to listItems
+          console.log(listItems)
         });
     }, []);
     return items;
@@ -62,10 +66,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Products() {
+function Products(props) {
   const classes = useStyles();
-
   const listItem=useItems();
+  
+  function handleClick(key) {
+
+    const productItem = listItem.find(data => data.id === key);
+    props.addToCart(productItem)
+  }
+
+  
   return (
     <div className = {classes.product}>
     {listItem.map(item => (
@@ -95,13 +106,22 @@ export default function Products() {
             <CardActions disableSpacing>
                 <IconButton aria-label="add to favorites">
                 <FavoriteIcon />
+                </IconButton >
+                <IconButton aria-label="cart" onClick={()=>{handleClick(item.id)}}>
+                <ShoppingCartIcon  />
                 </IconButton>
-                <IconButton aria-label="cart">
-                <ShoppingCartIcon />
-                </IconButton>
-            </CardActions>
+              </CardActions>
         </Card>
     ))}
     </div>
   );
 }
+
+const mapDispatchToProps= (dispatch)=>{
+    
+  return{
+      addToCart: (data)=>{dispatch(addToCart(data))}
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Products); 
